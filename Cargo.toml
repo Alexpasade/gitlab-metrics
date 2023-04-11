@@ -1,0 +1,23 @@
+[package]
+name = "metric_gitlab_deploys"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = "0.4"
+thiserror = "1.0"
+dotenv = "0.15.0"
+lazy_static = "1.4.0"
+dialoguer = "0.10.3"
+iced = "0.8"
+cursive = "0.20.0"
+colored = "2.0"
+figlet-rs = "0.1.5"
+regex = "1"
+rand = "0.8.5"
