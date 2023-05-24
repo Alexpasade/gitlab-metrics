@@ -67,7 +67,7 @@ async fn run_app() -> Result<(), Box<dyn std::error::Error>> {
     let merge_requests = get_merged_requests(&client, &source_branch, &target_branch).await?;
     let (total_duration, mr_count_staging) =
         process_merge_requests(&client, &merge_requests, &source_branch, &target_branch).await?;
-    print_average_duration(total_duration, mr_count_staging, &target_branch);
+    print_average_duration(total_duration, mr_count_staging, &target_branch, &source_branch);
 
     Ok(())
 }
@@ -159,7 +159,7 @@ fn print_time_difference(
     );
 }
 
-fn print_average_duration(total_duration: chrono::Duration, mr_count: i32, target_branch: &str) {
+fn print_average_duration(total_duration: chrono::Duration, mr_count: i32, target_branch: &str, source_branch: &str) {
     let average_duration = if mr_count > 0 {
         total_duration / mr_count
     } else {
@@ -173,8 +173,10 @@ fn print_average_duration(total_duration: chrono::Duration, mr_count: i32, targe
     let average_seconds = remainder.rem_euclid(60);
 
     println!(
-        "{}{}{}{}{}{}{}{}{}",
-        random_color("The average duration of the merge request to "),
+        "{}{}{}{}{}{}{}{}{}{}{}",
+        random_color("The average duration of the merge request from "),
+        random_color(source_branch),
+        random_color(" to "),
         random_color(target_branch),
         random_color(" is "),
         random_color(average_hours.to_string()),
@@ -182,7 +184,7 @@ fn print_average_duration(total_duration: chrono::Duration, mr_count: i32, targe
         random_color(average_minutes.to_string()),
         random_color(" minutes, and "),
         random_color(average_seconds.to_string()),
-        random_color(" seconds"),
+        random_color(" seconds."),
     );
 }
 
